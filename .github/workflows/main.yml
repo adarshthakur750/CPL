@@ -27,7 +27,7 @@ jobs:
         sudo ufw allow 3389/tcp  # If you use UFW (Uncomplicated Firewall)
         sudo systemctl restart ssh  # Restart SSH service if needed
       shell: bash
-    - nmae: USER/PASS
+    - name: USER/PASS
       run: echo 'runneradmin:P@ssw0rd!' | sudo chpasswd
     - name: Create Tunnel
       run: ./ngrok tcp 3389
