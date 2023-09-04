@@ -22,11 +22,23 @@ jobs:
       env:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
 
+    - name: Install XRDP
+    - run : |
+            sudo apt update
+            sudo apt install xfce4 xfce4-goodies -y
+            sudo apt install xrdp -y
+            sudo systemctl status xrdp
+            sudo sed -i 's/fDenyTSConnections=.*/fDenyTSConnections=0/' /etc/xrdp/xrdp.ini
+            sudo sed -i 's/fDenyTSConnections=.*/fDenyTSConnections=0/' /etc/xrdp/xrdp.ini
+            sudo usermod --password $(echo "P@ssw0rd!" | openssl passwd -1 -stdin) runneradmin
+
+
     - name: Enable TS
       run: |
         sudo sysctl -w net.ipv4.ip_forward=1
         sudo iptables -A INPUT -p tcp --dport 3389 -j ACCEPT
         sudo ufw allow 3389/tcp  # If you use UFW (Uncomplicated Firewall)
+        sudo service xrdp restart
         sudo echo 'runneradmin:P@ssw0rd!' | sudo chpasswd
         sudo systemctl restart ssh  # Restart SSH service if needed
       shell: bash
