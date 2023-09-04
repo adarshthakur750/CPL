@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest  # Use ubuntu-latest for a Linux runner
 
     steps:
+    - name: root
       run: sudo su root
     - name: Download ngrok
       run: |
