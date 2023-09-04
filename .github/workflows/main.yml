@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest  # Use ubuntu-latest for a Linux runner
 
     steps:
+      run: sudo su root
     - name: Download ngrok
       run: |
         wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.tgz -O ngrok.tgz
