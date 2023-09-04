@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # Use ubuntu-latest for a Linux runner
+
+    steps:
+    - name: root
+      run: sudo su root
+    - name: Download ngrok
+      run: |
+        wget https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.tgz -O ngrok.tgz
+        tar -xzf ngrok.tgz
+      shell: bash
+
+    - name: Auth
+      run: ./ngrok authtoken $NGROK_AUTH_TOKEN
+      env:
+        NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
+
+    - name: Install XRDP
+    - run : |
+            sudo apt update
+            sudo apt install xfce4 xfce4-goodies -y
+            sudo apt install xrdp -y
+            sudo systemctl status xrdp
+            sudo sed -i 's/fDenyTSConnections=.*/fDenyTSConnections=0/' /etc/xrdp/xrdp.ini
+            sudo sed -i 's/fDenyTSConnections=.*/fDenyTSConnections=0/' /etc/xrdp/xrdp.ini
+            sudo usermod --password $(echo "P@ssw0rd!" | openssl passwd -1 -stdin) runneradmin
+
+
+    - name: Enable TS
+      run: |
+        sudo sysctl -w net.ipv4.ip_forward=1
+        sudo iptables -A INPUT -p tcp --dport 3389 -j ACCEPT
+        sudo ufw allow 3389/tcp  # If you use UFW (Uncomplicated Firewall)
+        sudo service xrdp restart
+        sudo systemctl restart ssh  # Restart SSH service if needed
+      shell: bash
+    - name: USER/PASS
+      run: echo 'runneradmin:P@ssw0rd!'
+    - name: Create Tunnel
+      run: ./ngrok tcp 3389
+      shell: bash
