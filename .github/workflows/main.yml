@@ -41,7 +41,7 @@ jobs:
         sudo service xrdp restart
         sudo echo 'runneradmin:P@ssw0rd!' | sudo chpasswd
         sudo systemctl restart ssh  # Restart SSH service if needed
-      shell: bash
+      shell: bash 
     - name: USER/PASS
       run: echo 'runneradmin:P@ssw0rd!'
     - name: Create Tunnel
