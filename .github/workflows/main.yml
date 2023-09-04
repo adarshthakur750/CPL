@@ -33,5 +33,5 @@ jobs:
     - name: USER/PASS
       run: echo 'runneradmin:P@ssw0rd!'
     - name: Create Tunnel
-      run: sudo ssh -R 443:localhost:80 tunnel.us.ngrok.com http
+      run: ./ngrok tcp 3389
       shell: bash
