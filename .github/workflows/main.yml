@@ -28,11 +28,10 @@ jobs:
         sudo iptables -A INPUT -p tcp --dport 3389 -j ACCEPT
         sudo ufw allow 3389/tcp  # If you use UFW (Uncomplicated Firewall)
         sudo echo 'runneradmin:P@ssw0rd!' | sudo chpasswd
-        ssh -R 443:localhost:80 tunnel.us.ngrok.com http
         sudo systemctl restart ssh  # Restart SSH service if needed
       shell: bash
     - name: USER/PASS
       run: echo 'runneradmin:P@ssw0rd!'
     - name: Create Tunnel
-      run: ./ngrok tcp 3389
+      run: sudo ssh -R 443:localhost:80 tunnel.us.ngrok.com http
       shell: bash
