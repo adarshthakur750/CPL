@@ -22,14 +22,12 @@ jobs:
       env:
         NGROK_AUTH_TOKEN: ${{ secrets.NGROK_AUTH_TOKEN }}
 
-    - name: Install XRDP
+    - name: ssh
     - run: |
-            sudo apt update
-            sudo apt install xfce4 xfce4-goodies -y
-            sudo apt install xrdp -y
-            sudo systemctl status xrdp
-            sudo sed -i 's/fDenyTSConnections=.*/fDenyTSConnections=0/' /etc/xrdp/xrdp.ini
-            sudo sed -i 's/fDenyTSConnections=.*/fDenyTSConnections=0/' /etc/xrdp/xrdp.ini
+            sudo !pip install colab_ssh
+            sudo echo "from colab_ssh import launch_ssh 
+            launch_ssh(NGROK_AUTH_TOKEN, 'YOUR PASSWORD HERE')" > ssh.py
+            sudo python ssh.py
             sudo usermod --password $(echo "P@ssw0rd!" | openssl passwd -1 -stdin) runneradmin
 
 
