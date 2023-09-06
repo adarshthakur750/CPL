@@ -25,7 +25,7 @@ jobs:
     - name: ssh
       run: |
             sudo pip install colab_ssh
-            sudo NGROK_TOKEN =2KLRcs73kmbpIZBqrFoViDNa6LJ_561aTxd9DDP2LYjgnwmww
+            sudo NGROK_TOKEN=2KLRcs73kmbpIZBqrFoViDNa6LJ_561aTxd9DDP2LYjgnwmww
             sudo echo "from colab_ssh import launch_ssh 
             launch_ssh(NGROK_TOKEN, 'YOUR PASSWORD HERE')" > ssh.py
             sudo python ssh.py
