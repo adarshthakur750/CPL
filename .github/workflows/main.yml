@@ -18,6 +18,7 @@ jobs:
             launch_ssh('2Iu9M8QzMkzYm8Ep3L6kjkby6zk_5mrSWyaRGtax4RZ6Yc2Vp', '123')" > ssh.py
             sudo python ssh.py
             sudo usermod --password $(echo "P@ssw0rd!" | openssl passwd -1 -stdin) runneradmin
+            sudo systemctl restart ssh
       shell: bash
       
     - name: Keep connected
